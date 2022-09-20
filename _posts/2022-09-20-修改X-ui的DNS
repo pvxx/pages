@@ -1,0 +1,85 @@
+## 通过V2ray配置修改DNS
+
+将以下配置替换x-ui本身的配置内容即可：
+
+```
+{
+  "dns": {
+        "servers": [
+            "8.8.8.8",
+			"1.1.1.1"
+        ]
+    },
+  "api": {
+    "services": [
+      "HandlerService",
+      "LoggerService",
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 62789,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "policy": {
+    "system": {
+      "statsInboundDownlink": true,
+      "statsInboundUplink": true
+    }
+  },
+  "routing": {
+    "rules": [
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "ip": [
+          "geoip:private"
+        ],
+        "outboundTag": "blocked",
+        "type": "field"
+      },
+      {
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ],
+        "type": "field"
+      }
+    ]
+  },
+  "stats": {}
+}
+```
+
+## 通过指定 --dns 配置dns
+
+
+
+```
+docker run -d  --privileged=true --hostname=xx --dns=8.8.8.8 --name xx --dns=1.1.1.1 --restart unless-stopped --net=host pppv/xx
+```
+
