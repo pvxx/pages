@@ -3,7 +3,7 @@
 
 ```python
 
-docker run -d  --privileged=true  --restart unless-stopped --net=host pppv/xx
+docker run -d  --privileged=true  --restart unless-stopped --net=host --name xx  pppv/xx
 
 ```
 
