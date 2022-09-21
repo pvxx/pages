@@ -1,4 +1,10 @@
-创建1个文件夹，需要生成证书放里面
+### 创建桥接网络进行容器互联
+
+```
+docker network create -d bridge my-net
+```
+
+### 创建1个文件夹，需要生成证书放里面
 
 ~~~
 ls /root/config
@@ -7,21 +13,27 @@ key.pem
 default.conf
 ~~~
 
-运行vaultwarden
+### 运行vaultwarden
 
 ~~~
-docker run -d --name vaultwarden -v /vw-data/:/data/ -p 8080:80 -p 3013:3012 vaultwarden/server:latest
+docker run -d --name vaultwarden -v /vw-data/:/data/    --network my-net  vaultwarden/server:latest
+
+# 注意： 由于用nginx反代，vaultwarden无需暴露80和3012端口
+# docker run -d --name vaultwarden -v /vw-data/:/data/ -p 8080:80 -p 3013:3012 vaultwarden/server:latest
 ~~~
 
-运行nginx
+### 运行nginx
 
 ~~~
-docker run --name nginx --privileged=true -p 80:80 -p 443:443   -v /root/config/default.conf:/etc/nginx/conf.d/default.conf -v /root/config/:/etc/nginx/cert/ -d nginx
+docker run --name nginx --privileged=true -p 80:80 -p 443:443   --network my-net   -v /root/config/default.conf:/etc/nginx/conf.d/default.conf -v /root/config/:/etc/nginx/cert/ -d nginx
+
+#增加了桥接，用于互联
+#docker run --name nginx --privileged=true -p 80:80 -p 443:443   -v #/root/config/default.conf:/etc/nginx/conf.d/default.conf -v /root/config/:/etc/nginx/cert/ -d nginx
 ~~~
 
 
 
-default.conf 内容如下，域名需要修改。
+### default.conf 内容如下，域名需要修改。
 
 ~~~
 # The `upstream` directives ensure that you have a http/1.1 connection
@@ -30,12 +42,12 @@ default.conf 内容如下，域名需要修改。
 # Define the server IP and ports here.
 upstream vaultwarden-default {
   zone vaultwarden-default 64k;
-  server pass.pvxx.com:8080;
+  server vaultwarden:80;
   keepalive 2;
 }
 upstream vaultwarden-ws {
   zone vaultwarden-ws 64k;
-  server pass.pvxx.com:3013;
+  server vaultwarden:3012;
   keepalive 2;
 }
 
@@ -117,7 +129,8 @@ server {
 ~~~
 
 ---------------------------------------------------------------------------------
-个人搭建：系统ubuntu 18.04
+
+### 个人搭建：系统ubuntu 18.04
 
 /root/config文件夹只放证书，default.conf已存放到容器内。
 
@@ -126,8 +139,22 @@ mkdir /root/config
 wget https://raw.githubusercontent.com/pvxx/vaultwarden/main/mypasswd.net/cert.pem -O /root/config/cert.pem
 wget https://raw.githubusercontent.com/pvxx/vaultwarden/main/mypasswd.net/key.pem -O /root/config/key.pem
 wget https://raw.githubusercontent.com/pvxx/vaultwarden/main/mypasswd.net/default.conf -O /root/config/default.conf
-docker run --name nginx --privileged=true -p 80:80 -p 443:443  -v /root/config/default.conf:/etc/nginx/conf.d/default.conf  -v /root/config/:/etc/nginx/cert/ -d pppv/nginx
-docker run -d --name vaultwarden  --privileged=true -v /vw-data/:/data/ -p 8080:80 -p 3013:3012  pppv/vaultwarden
+docker network create -d bridge my-net
+docker run -d --name vaultwarden -v /vw-data/:/data/    --network my-net  vaultwarden/server:latest
+docker run --name nginx --privileged=true -p 80:80 -p 443:443   --network my-net   -v /root/config/default.conf:/etc/nginx/conf.d/default.conf -v /root/config/:/etc/nginx/cert/ -d nginx
+
+
 ~~~
 
 [参考https://github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
+
+
+
+
+
+
+
+
+
+
+
