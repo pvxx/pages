@@ -1,8 +1,3 @@
-
-
-
-
-
 https://hub.docker.com/r/kylemanna/openvpn/
 
 快速开始
@@ -23,15 +18,26 @@ docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki
 启动 OpenVPN 服务器进程
 
 ```
-docker run -v $OVPN_DATA:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn
+docker run -v $OVPN_DATA:/etc/openvpn -d --restart unless-stopped -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn
 ```
+
 生成没有密码的客户端证书
 
 ```
 docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full CLIENTNAME nopass
 ```
+
 使用嵌入式证书检索客户端配置
 
 ```
 docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
 ```
+
+集成数据的openvpn
+
+
+
+```
+docker run  -d  --restart unless-stopped -p 1194:1194/udp --cap-add=NET_ADMIN --name openvpn pppv/op
+```
+
