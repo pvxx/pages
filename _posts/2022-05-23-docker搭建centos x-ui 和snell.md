@@ -1,3 +1,8 @@
+---
+layout: post
+title: docker搭建centos x-ui 和snell
+---
+
 搭建指令：
 
 
