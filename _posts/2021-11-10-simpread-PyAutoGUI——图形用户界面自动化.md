@@ -1,4 +1,7 @@
-> 本文由 [简悦 SimpRead](http://ksria.com/simpread/) 转码， 原文地址 [zhuanlan.zhihu.com](https://zhuanlan.zhihu.com/p/41662890)
+---
+title: simpread-PyAutoGUI——图形用户界面自动化
+---
+
 
 PyAutoGUI 模块通过屏幕 xy 坐标系统确定目标位置，控制鼠标和键盘发送虚拟击键和鼠标点击，完成点击按钮、填写表单等操作，在没有模块对应你要操作的无聊任务的时候，也不失为一个不错的选择。
 
