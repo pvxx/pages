@@ -1,3 +1,6 @@
+---
+title: TTL和DNS TTL 生存时间
+---
 ### TTL :
 
 ​			ICMP包的转发次数（跳数）
