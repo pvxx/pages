@@ -25,7 +25,7 @@ timezone: Asia/Shanghai
 title: 若水                          # the main title
 
 tagline: 上善若水，水善利万物而不争   # it will display as the sub-title
-music: https://youtu.be/llsrn1MP7gw
+music: https://raw.githubusercontent.com/pvxx/res/main/mp3/xiashan.mp3
 
 description: >-                        # used by seo meta and the atom feed
   上善若水，水善利万物而不争.
