@@ -6,7 +6,7 @@
 -------------
 
 ```
-1wget -qO /usr/local/bin/cf-ddns.sh https://moththe.com/posts/cf_ddns/cf-ddns.sh
+1wget -qO /usr/local/bin/cf-ddns.sh https://raw.githubusercontent.com/pvxx/tools/main/cloudflare%20ddns/cf-ddns.sh
 
 ```
 
