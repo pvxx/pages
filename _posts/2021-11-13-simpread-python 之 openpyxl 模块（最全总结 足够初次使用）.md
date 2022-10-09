@@ -1,5 +1,6 @@
-> 本文由 [简悦 SimpRead](http://ksria.com/simpread/) 转码， 原文地址 [www.cnblogs.com](https://www.cnblogs.com/programmer-tlh/p/10461353.html)
-
+---
+title: simpread-python 之 openpyxl 模块（最全总结 足够初次使用）
+---
 openpyxl 模块
 ===========
 
