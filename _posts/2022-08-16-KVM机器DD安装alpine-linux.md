@@ -14,7 +14,7 @@ setup-apkrepos #选择e编辑
 ```
 #/media/vda/apks
 http://dl-4.alpinelinux.org/alpine/v3.9/main
-#http://dl-4.alpinelinux.org/alpine/v3.5/community
+http://dl-4.alpinelinux.org/alpine/v3.5/community
 #http://dl-4.alpinelinux.org/alpine/edge/main
 #http://dl-4.alpinelinux.org/alpine/edge/community
 #http://dl-4.alpinelinux.org/alpine/edge/testing
@@ -24,6 +24,7 @@ http://dl-cdn.alpinelinux.org/alpine/v3.9/main
 #http://dl-cdn.alpinelinux.org/alpine/edge/main
 #http://dl-cdn.alpinelinux.org/alpine/edge/community
 #http://dl-cdn.alpinelinux.org/alpine/edge/testing
+
 
 ```
 执行如下命令进行升级：
