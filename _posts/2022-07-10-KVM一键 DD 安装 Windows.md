@@ -9,6 +9,10 @@ win server 2012
 wget -qO DebianNET.sh qiu.sh/dd && bash DebianNET.sh -dd "https://mirrors.yuntu.ca/teddysun/cn_windows2012r2.gz"
 ```
 
+用户名：`administrator`密码：`Password147`
+
+
+
 刷写腾讯云特别有效，需要在centos7下刷写
 
 ### **教程开始**  
