@@ -1,11 +1,17 @@
 
-目前再用的命令：
+目前再用的命令（win server 2019）：
 ```
 wget -qO DebianNET.sh qiu.sh/dd && bash DebianNET.sh -dd "https://mirrors.yuntu.ca/teddysun/cn_windows2019.gz"
 ```
+win server 2012
+
+```
+wget -qO DebianNET.sh qiu.sh/dd && bash DebianNET.sh -dd "https://mirrors.yuntu.ca/teddysun/cn_windows2012r2.gz"
+```
+
 刷写腾讯云特别有效，需要在centos7下刷写
 
-**教程开始**  
+### **教程开始**  
 安装 Ubuntu 系统
 
 root权限安装必须软件包
@@ -23,7 +29,9 @@ yum install -y xz openssl gawk file
 
 
 
-### 一键脚本：
+### ### 一键脚本
+
+
 
 ```
 ##镜像文件在OneDrive
@@ -214,5 +222,4 @@ wget --no-check-certificate -O NewReinstall.sh https://cdn.jsdelivr.net/gh/f
 99、自定义镜像
 
 * * *
-
 
