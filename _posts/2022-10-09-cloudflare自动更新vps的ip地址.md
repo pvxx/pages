@@ -6,8 +6,7 @@
 -------------
 
 ```
-1wget -qO /usr/local/bin/cf-ddns.sh https://raw.githubusercontent.com/pvxx/tools/main/cloudflare%20ddns/cf-ddns.sh
-
+wget -qO /usr/local/bin/cf-ddns.sh https://raw.githubusercontent.com/pvxx/tools/main/cloudflare%20ddns/cf-ddns.sh
 ```
 
 使用方法[](#使用方法)
@@ -31,62 +30,60 @@
 -------------
 
 ```
- 1#!/bin/bash
- 2
- 3# CHANGE THESE
- 4auth_email="user@example.com"
- 5auth_key="c2547eb745079dac9320b638f5e225cf483cc5cfdda41" # found in cloudflare account settings
- 6zone_
- 7record_
- 8
- 9# MAYBE CHANGE THESE
-10ip=$(curl -s http://ipv4.icanhazip.com)
-11ip_file="ip.txt"
-12id_file="cloudflare.ids"
-13log_file="cloudflare.log"
-14
-15# LOGGER
-16log() {
-17    if [ "$1" ]; then
-18        echo -e "[$(date)] - $1" >> $log_file
-19    fi
-20}
-21
-22# SCRIPT START
-23log "Check Initiated"
-24
-25if [ -f $ip_file ]; then
-26    old_ip=$(cat $ip_file)
-27    if [ $ip == $old_ip ]; then
-28        echo "IP has not changed."
-29        exit 0
-30    fi
-31fi
-32
-33if [ -f $id_file ] && [ $(wc -l $id_file | cut -d " " -f 1) == 2 ]; then
-34    zone_identifier=$(head -1 $id_file)
-35    record_identifier=$(tail -1 $id_file)
-36else
-37    zone_identifier=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones? | grep -Po '(?<="id":")[^"]*' | head -1 )
-38    record_identifier=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records?  | grep -Po '(?<="id":")[^"]*')
-39    echo "$zone_identifier" > $id_file
-40    echo "$record_identifier" >> $id_file
-41fi
-42
-43update=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records/$record_identifier" -H "X-Auth-Email: $auth_email" -H "X-Auth-Key: $auth_key" -H "Content-Type: application/json" --data "{\"id\":\"$zone_identifier\",\"type\":\"A\",\"name\":\"$record_name\",\"content\":\"$ip\"}")
-44
-45if [[ $update == *"\"success\":false"* ]]; then
-46    message="API UPDATE FAILED. DUMPING RESULTS:\n$update"
-47    log "$message"
-48    echo -e "$message"
-49    exit 1 
-50else
-51    message="IP changed to: $ip"
-52    echo "$ip" > $ip_file
-53    log "$message"
-54    echo "$message"
-55fi
+#!/bin/bash
+# CHANGE THESE
+auth_email="user@example.com"
+auth_key="c2547eb745079dac9320b638f5e225cf483cc5cfdda41" # found in cloudflare account settings
+zone_name="example.com"
+record_name="www.example.com"
 
+# MAYBE CHANGE THESE
+ip=$(curl -s http://ipv4.icanhazip.com)
+ip_file="ip.txt"
+id_file="cloudflare.ids"
+log_file="cloudflare.log"
+
+# LOGGER
+log() {
+    if [ "$1" ]; then
+        echo -e "[$(date)] - $1" >> $log_file
+    fi
+}
+
+# SCRIPT START
+log "Check Initiated"
+
+if [ -f $ip_file ]; then
+    old_ip=$(cat $ip_file)
+    if [ $ip == $old_ip ]; then
+        echo "IP has not changed."
+        exit 0
+    fi
+fi
+
+if [ -f $id_file ] && [ $(wc -l $id_file | cut -d " " -f 1) == 2 ]; then
+    zone_identifier=$(head -1 $id_file)
+    record_identifier=$(tail -1 $id_file)
+else
+    zone_identifier=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=$zone_name" -H "X-Auth-Email: $auth_email" -H "X-Auth-Key: $auth_key" -H "Content-Type: application/json" | grep -Po '(?<="id":")[^"]*' | head -1 )
+    record_identifier=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records?name=$record_name" -H "X-Auth-Email: $auth_email" -H "X-Auth-Key: $auth_key" -H "Content-Type: application/json"  | grep -Po '(?<="id":")[^"]*')
+    echo "$zone_identifier" > $id_file
+    echo "$record_identifier" >> $id_file
+fi
+
+update=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records/$record_identifier" -H "X-Auth-Email: $auth_email" -H "X-Auth-Key: $auth_key" -H "Content-Type: application/json" --data "{\"id\":\"$zone_identifier\",\"type\":\"A\",\"name\":\"$record_name\",\"content\":\"$ip\"}")
+
+if [[ $update == *"\"success\":false"* ]]; then
+    message="API UPDATE FAILED. DUMPING RESULTS:\n$update"
+    log "$message"
+    echo -e "$message"
+    exit 1 
+else
+    message="IP changed to: $ip"
+    echo "$ip" > $ip_file
+    log "$message"
+    echo "$message"
+fi
 
 ```
 
