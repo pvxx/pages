@@ -18,6 +18,7 @@ docker run \
   -e "WG_WIREGUARD_PRIVATE_KEY=0E2RfeIHlvfYl19LpR/EFwO4q4SZwBRCiIhzKY4q2mo=" \
   -p 33333:8000/tcp \
   -p 51820:51820/udp \
+  --restart=always \
   place1/wg-access-server
 ~~~
 
