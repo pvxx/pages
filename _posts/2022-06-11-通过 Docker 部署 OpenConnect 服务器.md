@@ -21,7 +21,7 @@
 2022-11-06:我的一键搭建如下：
 
 ```
-docker run --name ocserv --privileged -p 443:443 -p 443:443/udp -d pppv/opct
+docker run --name oc --privileged --restart unless-stopped -p 443:443 -p 443:443/udp -d pppv/opct
 #username: user1-5
 passwd:0
 ```

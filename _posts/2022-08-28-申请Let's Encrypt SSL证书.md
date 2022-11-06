@@ -49,3 +49,45 @@ acme.sh --install-cert -d domain.com \
 
 https://github.com/acmesh-official/acme.sh
 
+
+
+
+
+新增Docker方法
+
+
+
+第一步：
+
+
+
+```
+docker run --rm  -itd  \
+  -v "$(pwd)/out":/acme.sh  \
+  --net=host \
+  --name=acme.sh \
+  neilpang/acme.sh daemon
+```
+
+
+
+第二步：
+
+
+
+```
+docker  exec  acme.sh  --issue -d *.vpshost.me  --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please --standalone
+```
+
+
+
+第三步
+
+
+
+```
+docker  exec  acme.sh  --renew -d *.vpshost.me  --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please --standalone
+```
+
+
+
