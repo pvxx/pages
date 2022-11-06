@@ -18,6 +18,14 @@
 
 ### [](#OpenConnect-Server-的安装 "OpenConnect Server 的安装")OpenConnect Server 的安装
 
+2022-11-06:我的一键搭建如下：
+
+```
+docker run --name ocserv --privileged -p 443:443 -p 443:443/udp -d pppv/opct
+#username: user1-5
+passwd:0
+```
+
 一条如此简单的命令，就可以把 OpenConnect Server (ocserv) 安装到你的服务器了：
 
 ```
