@@ -26,6 +26,20 @@ docker run --name oc --privileged --restart unless-stopped -p 443:443 -p 443:443
 #passwd:0
 ```
 
+
+
+对于腾讯云，由于屏蔽443端口，建议改为其它端口，如下：
+
+```
+docker run --name oc --privileged --restart unless-stopped -p 5555:443 -p 5555:443/udp -d pppv/opct
+#username: user1-5
+#passwd:0
+```
+
+访问的时候，需要域名带端口访问
+
+
+
 一条如此简单的命令，就可以把 OpenConnect Server (ocserv) 安装到你的服务器了：
 
 ```
