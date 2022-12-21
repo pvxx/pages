@@ -10,8 +10,12 @@ title: docker搭建centos x-ui 和snell
 
 docker run -d  --privileged=true  --restart unless-stopped --net=host --name xx  pppv/xx
 
-docker run -d  --privileged=true  --restart unless-stopped --net=host --name xx  pppv/xx:only_vmess #只保留vmess
+```
 
+
+
+```
+docker run -d  --privileged=true  --restart unless-stopped --net=host --name xx  pppv/xx:only_vmess #只保留vmess
 ```
 
 
